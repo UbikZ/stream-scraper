@@ -6,3 +6,9 @@ MAINTAINER Gabriel Malet
 
 # Copy custom configuration file from the current directory
 COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose ports
+EXPOSE 443
+
+# Define default command
+CMD service nginx start
