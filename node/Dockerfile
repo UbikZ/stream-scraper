@@ -27,4 +27,4 @@ ADD . /src
 EXPOSE  8080
 
 # Run app using nodemon
-CMD ["pm2", "start", "/src/app.js"]
+CMD pm2 start --no-daemon /src/app.js
