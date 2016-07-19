@@ -13,7 +13,7 @@ const methods = {
   DELETE: 'DELETE',
 };
 
-const controllers = ['index', 'user'];
+const controllers = ['index'];
 
 /**
  * Router Handler Middleware

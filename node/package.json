@@ -43,9 +43,5 @@
     "redis": "^2.6.2",
     "winston": "^2.2.0"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ekstrekt/api/issues"
-  },
-  "homepage": "https://github.com/ekstrekt/api#readme"
+  "license": "MIT"
 }
