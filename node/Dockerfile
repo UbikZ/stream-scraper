@@ -6,7 +6,7 @@ MAINTAINER Gabriel Malet
 
 # Install Node.js and other dependencies
 RUN apt-get update && \
-	apt-get -y install apt-utils && \
+	apt-get -y install git && \
     apt-get -y install curl && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
     apt-get -y install python build-essential nodejs
