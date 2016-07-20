@@ -1,5 +1,5 @@
 # Set the base image to Ubuntu
-FROM    ubuntu
+FROM ubuntu
 
 # File Author / Maintainer
 MAINTAINER Gabriel Malet
@@ -9,7 +9,9 @@ RUN apt-get update && \
 	apt-get -y install git && \
     apt-get -y install curl && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
-    apt-get -y install python build-essential nodejs
+    apt-get -y install python build-essential nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install PM2
 RUN npm install -g pm2
@@ -24,7 +26,7 @@ WORKDIR /src
 ADD . /src
 
 # Expose port
-EXPOSE  8080
+EXPOSE 8080
 
 # Run app using nodemon
 CMD pm2 start --no-daemon /src/app.js
