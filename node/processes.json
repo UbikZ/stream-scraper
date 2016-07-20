@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "merge_logs": true,
+      "name": "stream-scraper",
+      "out_file": "/tmp/pm2.log",
+      "log_date_format": "MM/DD/YYYY HH:mm:ss",
+      "script": "app.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

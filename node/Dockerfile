@@ -25,5 +25,5 @@ ADD . /src
 # Expose port
 EXPOSE 8080
 
-# Run app using nodemon
-CMD pm2 start --no-daemon /src/app.js
+# Run app
+CMD pm2 start --no-daemon processes.json
