@@ -2,6 +2,11 @@
 
 const version = 1;
 
+const redisConf = {
+  port: 6379,
+  host: 'redis',
+};
+
 module.exports = {
   api: {
     version,
@@ -9,11 +14,14 @@ module.exports = {
   },
   development: {
     port: 8080,
+    redisConf,
   },
   staging: {
     port: 8081,
+    redisConf,
   },
   production: {
     port: 8080,
+    redisConf,
   },
 };

@@ -3,6 +3,7 @@
 const fs = require('fs');
 const express = require('express');
 const BPromise = require('bluebird');
+const redis = BPromise.promisifyAll(require('redis'));
 
 const Router = require('./middleware/Router');
 const Base = require('./middleware/Base');
@@ -20,6 +21,7 @@ class AbstractApplication {
   constructor() {
     try {
       this.app = express();
+      this.redis = undefined;
       this.config = undefined;
 
       // Call methods
@@ -44,7 +46,7 @@ class AbstractApplication {
    */
   run() {
     this.app.listen(this.config.port, () => {
-      Log.info(`[SERVER] Dstarted on port ${this.config.port}.`);
+      Log.info(`[SERVER] Started on port ${this.config.port}.`);
     });
   }
 
@@ -82,11 +84,16 @@ class AbstractApplication {
   }
 
   /**
-   * Register mongodb database
+   * Register REDIS database
    * @private
    */
   registerDatabase() {
-    // todo
+    const redisConf = this.config.redisConf;
+    this.redis = redis.createClient(redisConf.port, redisConf.host);
+    Log.info(`[REDIS] Connexion try on '${redisConf.host}:${redisConf.port}'.`);
+    this.redis.on('error', Log.error.bind(Log, '[REDIS] '));
+    this.redis.on('connect', Log.info.bind(Log, '[REDIS] Connection DONE'));
+    this.redis.on('ready', Log.info.bind(Log, '[REDIS] Connection READY'));
   }
 
   /**
