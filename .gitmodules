@@ -1,0 +1,9 @@
+[submodule "docker/ubikz-docker-compose"]
+	path = docker/ubikz-docker-compose
+	url = git@github.com:UbikZ/ubikz-docker-compose.git
+[submodule "docker/ubikz-docker-redis"]
+	path = docker/ubikz-docker-redis
+	url = git@github.com:UbikZ/ubikz-docker-redis.git
+[submodule "docker/ubikz-docker-nginx"]
+	path = docker/ubikz-docker-nginx
+	url = git@github.com:UbikZ/ubikz-docker-nginx.git
