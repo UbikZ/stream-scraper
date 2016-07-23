@@ -18,7 +18,6 @@ class IndexController {
    */
   static indexAction(request, response) {
     const data = { api, permissions: AbstractController.permissions };
-    throw new Error("pouet");
     Http.sendResponse(response, 200, SuccessCode.NO_CODE, undefined, data);
   }
 }
