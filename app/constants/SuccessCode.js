@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  NO_CODE: 0
+  NO_CODE: 0,
 };
