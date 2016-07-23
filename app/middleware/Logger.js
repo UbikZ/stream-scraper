@@ -1,37 +1,24 @@
 'use strict';
 
+require('winston-redis');
 const winston = require('winston');
-const moment = require('moment');
 const morgan = require('morgan');
 
 const DateHelper = require('./../helpers/Date');
 
 const paths = require('../../config/paths');
+const httpConf = require('./../../config/http');
 
 /**
  * Logger Handler middleware
  */
 class Logger {
   /**
-   * Build the logger as middleware
-   * @param app
-   */
-  static build(app) {
-    app.use(morgan('combined', {
-      stream: {
-        write: (message) => {
-          Logger.get().info(message);
-        },
-      },
-    }));
-  }
-
-  /**
    * Get the logger
    * @returns {*}
    */
   static get() {
-    const transports = [Logger.transportFile()];
+    const transports = [Logger.transportRedis(httpConf[process.env.NODE_ENV].redisConf)];
     // We do not want use console log in "testing mode"
     if (!~['staging'].indexOf(process.env.NODE_ENV)) {
       transports.push(Logger.transportConsole());
@@ -97,6 +84,17 @@ class Logger {
       maxsize: 5242880, // 5MB
       colorize: false,
     });
+  }
+
+  /**
+   * For Redis log
+   * @param conf
+   * @returns {*}
+   */
+  static transportRedis(conf) {
+    const host = conf.host;
+    const port = conf.port;
+    return new winston.transports.Redis({ host, port });
   }
 }
 

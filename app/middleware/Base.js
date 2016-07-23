@@ -2,6 +2,9 @@
 
 const bodyParser = require('body-parser');
 
+const Logger = require('./Logger');
+const Log = Logger.get();
+
 /**
  * Base middleware
  */
@@ -34,6 +37,12 @@ class Base {
         sent = true;
       };
       next();
+    });
+
+    // Error handling
+    app.use((error, request, response, next) => {
+      Log.error(error.stack);
+      next(error);
     });
   }
 }

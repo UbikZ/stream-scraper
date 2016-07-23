@@ -21,22 +21,18 @@ class AbstractApplication {
   constructor() {
     try {
       this.app = express();
+      this.config = httpConf[process.env.NODE_ENV];
       this.redis = undefined;
-      this.config = undefined;
 
       // Call methods
+      this.registerDatabase();
       this.checkSettings();
       this.registerConfiguration();
       this.registerHttpMiddleware();
-      this.registerDatabase();
       this.registerModels();
       this.registerControllers();
     } catch (error) {
-      if (Log !== undefined) {
-        Log.error(error);
-      } else {
-        console.error(error.toString());
-      }
+      Log.error(error);
       process.exit(0);
     }
   }
@@ -66,8 +62,7 @@ class AbstractApplication {
    * @private
    */
   registerConfiguration() {
-    if (httpConf !== undefined && httpConf[process.env.NODE_ENV] !== undefined) {
-      this.config = httpConf[process.env.NODE_ENV];
+    if (httpConf !== undefined && this.config !== undefined) {
       this.config.port = this.config.port || process.env.PORT || 3000;
       this.config.debug = !!~['production'].indexOf(process.env.NODE_ENV);
       Log.debug('[CONF] Settings OK.');
@@ -79,7 +74,6 @@ class AbstractApplication {
    * @private
    */
   registerHttpMiddleware() {
-    Logger.build(this.app);
     Base.build(this.app);
   }
 

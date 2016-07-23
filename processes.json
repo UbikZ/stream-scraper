@@ -1,9 +1,9 @@
 {
   "apps": [
     {
-      "merge_logs": true,
       "name": "stream-scraper",
-      "out_file": "/tmp/pm2.log",
+      "out_file": "/var/log/stream_scraper/out.log",
+      "error_file": "/var/log/stream_scraper/err.log",
       "log_date_format": "MM/DD/YYYY HH:mm:ss",
       "script": "app.js",
       "env": {
