@@ -11,6 +11,8 @@ stream-scraper:
         - redis
     ports:
         - "8080"
+    volumes:
+        - /srv/docker/stream-scraper:/var/log/stream_scraper
 redis:
     image: ubikz/ubikz-docker-redis
     ports:
