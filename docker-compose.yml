@@ -2,9 +2,13 @@ nginx:
     image: ubikz/ubikz-docker-nginx
     links:
         - stream-scraper:stream-scraper
+        - redis-commander:redis-commander
     ports:
         - "80:80"
         - "443:443"
+    volumes:
+        - /srv/docker/nginx:/var/log/nginx
+    env_file: .nginx.env
 stream-scraper:
     build: .
     links:
@@ -13,6 +17,13 @@ stream-scraper:
         - "8080"
     volumes:
         - /srv/docker/stream-scraper:/var/log/stream_scraper
+redis-commander:
+    image: ubikz/ubikz-docker-redis-cmd
+    links:
+        - redis
+    ports:
+        - "8080"
+    env_file: .redis-commander.env
 redis:
     image: ubikz/ubikz-docker-redis
     ports:

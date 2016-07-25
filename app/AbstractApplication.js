@@ -3,7 +3,7 @@
 const fs = require('fs');
 const express = require('express');
 const BPromise = require('bluebird');
-const redis = BPromise.promisifyAll(require('redis'));
+const Redis = require('ioredis');
 
 const Router = require('./middleware/Router');
 const Base = require('./middleware/Base');
@@ -83,11 +83,17 @@ class AbstractApplication {
    */
   registerDatabase() {
     const redisConf = this.config.redisConf;
-    this.redis = redis.createClient(redisConf.port, redisConf.host);
+    this.redis = new Redis(redisConf.port, redisConf.host);
     Log.info(`[REDIS] Connexion try on '${redisConf.host}:${redisConf.port}'.`);
-    this.redis.on('error', Log.error.bind(Log, '[REDIS] '));
-    this.redis.on('connect', Log.info.bind(Log, '[REDIS] Connection DONE'));
-    this.redis.on('ready', Log.info.bind(Log, '[REDIS] Connection READY'));
+    this.redis.on('error', (error) => {
+      Log.error('[REDIS] Error ' + error.stack)
+    });
+    this.redis.on('connect', () => {
+      Log.info('[REDIS] Connection DONE')
+    });
+    this.redis.on('ready', () => {
+      Log.info('[REDIS] Connection READY')
+    });
   }
 
   /**

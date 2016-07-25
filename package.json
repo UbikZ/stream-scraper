@@ -36,11 +36,11 @@
     "bluebird": "^3.3.5",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "ioredis": "^2.2.0",
     "lodash": "^4.11.2",
     "merge": "^1.2.0",
     "moment": "^2.13.0",
     "morgan": "^1.7.0",
-    "redis": "^2.6.2",
     "winston": "^2.2.0",
     "winston-redis": "^1.0.0"
   },
