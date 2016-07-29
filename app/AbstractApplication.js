@@ -1,12 +1,11 @@
 'use strict';
 
-const fs = require('fs');
 const express = require('express');
-const BPromise = require('bluebird');
 const Redis = require('ioredis');
 
 const Router = require('./middleware/Router');
 const Base = require('./middleware/Base');
+const Model = require('./middleware/Model');
 const Logger = require('./middleware/Logger');
 
 const httpConf = require('./../config/http');
@@ -22,7 +21,7 @@ class AbstractApplication {
     try {
       this.app = express();
       this.config = httpConf[process.env.NODE_ENV];
-      this.app.redis = undefined;
+      this.redis = undefined;
 
       // Call methods
       this.registerDatabase();
@@ -83,15 +82,15 @@ class AbstractApplication {
    */
   registerDatabase() {
     const redisConf = this.config.redisConf;
-    this.app.redis = new Redis(redisConf.port, redisConf.host);
+    this.redis = new Redis(redisConf.port, redisConf.host);
     Log.info(`[REDIS] Connexion try on '${redisConf.host}:${redisConf.port}'.`);
-    this.app.redis.on('error', (error) => {
-      Log.error('[REDIS] Error ' + error.stack);
+    this.redis.on('error', (error) => {
+      Log.error(`[REDIS] Error ${error.stack}`);
     });
-    this.app.redis.on('connect', () => {
+    this.redis.on('connect', () => {
       Log.info('[REDIS] Connection DONE');
     });
-    this.app.redis.on('ready', () => {
+    this.redis.on('ready', () => {
       Log.info('[REDIS] Connection READY');
     });
   }
@@ -100,7 +99,7 @@ class AbstractApplication {
    * @private
    */
   registerModels() {
-    // todo
+    Model.build(this.app, this.redis);
   }
 
   /**
