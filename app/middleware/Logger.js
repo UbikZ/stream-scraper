@@ -2,7 +2,7 @@
 
 require('winston-redis');
 const winston = require('winston');
-const morgan = require('morgan');
+const util = require('util');
 
 const DateHelper = require('./../helpers/Date');
 
@@ -50,6 +50,8 @@ class Logger {
       errors.forEach((error) => {
         result.push(error);
       });
+    } else if (Object.prototype.toString.call(message) === '[object Object]') {
+      result.push(util.inspect(message, false, null));
     } else {
       result.push(`${head} ${message}`);
     }
