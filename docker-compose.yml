@@ -1,3 +1,4 @@
+# Docker file for development purpose
 nginx:
     image: ubikz/ubikz-docker-nginx
     links:
@@ -11,12 +12,14 @@ nginx:
     env_file: .nginx.env
 stream-scraper:
     build: .
+    dockerfile: Dockerfile.dev
     links:
         - redis
     ports:
         - "8080"
     volumes:
         - /srv/docker/stream-scraper:/var/log/stream_scraper
+        - .:/src # We set a volume for our dev files
 redis-commander:
     image: ubikz/ubikz-docker-redis-cmd
     links:

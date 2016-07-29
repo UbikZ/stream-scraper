@@ -21,7 +21,6 @@ class IndexController {
    */
   static indexAction(request, response) {
     const data = { api, permissions: AbstractController.permissions };
-    Log.info('test');
     Http.sendResponse(response, 200, SuccessCode.NO_CODE, undefined, data);
   }
 }

@@ -22,7 +22,7 @@ class AbstractApplication {
     try {
       this.app = express();
       this.config = httpConf[process.env.NODE_ENV];
-      this.redis = undefined;
+      this.app.redis = undefined;
 
       // Call methods
       this.registerDatabase();
@@ -83,16 +83,16 @@ class AbstractApplication {
    */
   registerDatabase() {
     const redisConf = this.config.redisConf;
-    this.redis = new Redis(redisConf.port, redisConf.host);
+    this.app.redis = new Redis(redisConf.port, redisConf.host);
     Log.info(`[REDIS] Connexion try on '${redisConf.host}:${redisConf.port}'.`);
-    this.redis.on('error', (error) => {
-      Log.error('[REDIS] Error ' + error.stack)
+    this.app.redis.on('error', (error) => {
+      Log.error('[REDIS] Error ' + error.stack);
     });
-    this.redis.on('connect', () => {
-      Log.info('[REDIS] Connection DONE')
+    this.app.redis.on('connect', () => {
+      Log.info('[REDIS] Connection DONE');
     });
-    this.redis.on('ready', () => {
-      Log.info('[REDIS] Connection READY')
+    this.app.redis.on('ready', () => {
+      Log.info('[REDIS] Connection READY');
     });
   }
 

@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "stream-scraper",
+      "out_file": "/var/log/stream_scraper/out.log",
+      "error_file": "/var/log/stream_scraper/err.log",
+      "log_date_format": "MM/DD/YYYY HH:mm:ss",
+      "script": "app.js",
+      "watch": ["app", "config"],
+      "ignore_watch" : ["node_modules"],
+      "watch_options": {
+        "followSymlinks": true
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
