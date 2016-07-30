@@ -7,8 +7,6 @@ const SuccessCode = require('./../constants/SuccessCode');
 
 const api = require('./../../config/http').api;
 
-const Logger = require('./../middleware/Logger').get();
-
 /**
  * Index controller
  */
@@ -20,9 +18,8 @@ class IndexController {
    */
   static indexAction(request, response) {
     const data = { api, permissions: AbstractController.permissions };
-    Logger.info(request.app.db);
-    request.app.db.UserModel.add().then(() => {
-      console.log('test');
+    request.app.db.UserModel.create({ username: 'gab', password: 'pouet' }).then((result) => {
+      console.log(result);
     });
     Http.sendResponse(response, 200, SuccessCode.NO_CODE, undefined, data);
   }

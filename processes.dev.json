@@ -7,9 +7,11 @@
       "log_date_format": "MM/DD/YYYY HH:mm:ss",
       "script": "app.js",
       "watch": ["app", "config"],
-      "ignore_watch" : ["node_modules"],
+      "ignore_watch" : ["node_modules", ".git"],
       "watch_options": {
-        "followSymlinks": true
+        "followSymlinks": true,
+        "usePolling": true,
+        "interval": 300
       },
       "env": {
         "NODE_ENV": "development"
